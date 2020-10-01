@@ -13,17 +13,17 @@ data "aws_instances" "emr_master_instances" {
   ]
 }
 
-data "aws_instances" "emr_core_instances" {
-  instance_tags = {
-    Name = "dev-humnai-kylin"
-  }
+# data "aws_instances" "emr_core_instances" {
+#   instance_tags = {
+#     Name = "dev-humnai-kylin"
+#   }
 
-  filter {
-    name   = "tag:aws:elasticmapreduce:instance-group-role"
-    values = ["SLAVE"]
-  }
+#   filter {
+#     name   = "tag:aws:elasticmapreduce:instance-group-role"
+#     values = ["SLAVE"]
+#   }
 
-  depends_on = [
-    aws_emr_cluster.default
-  ]
-}
+#   depends_on = [
+#     aws_emr_cluster.default
+#   ]
+# }
