@@ -8,11 +8,10 @@ output "master_instance_ids" {
   description = "EMR master instance ids"
 }
 
-output "core_instance_ids" {
-  value       = data.aws_instances.emr_core_instances.ids
-  description = "EMR core instance ids"
-}
-
+# output "core_instance_ids" {
+#   value       = data.aws_instances.emr_core_instances.ids
+#   description = "EMR core instance ids"
+# }
 
 output "cluster_name" {
   value       = join("", aws_emr_cluster.default.*.name)
