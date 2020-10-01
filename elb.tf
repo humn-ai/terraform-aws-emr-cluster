@@ -119,7 +119,7 @@ resource "aws_lb_target_group" "default" {
 }
 
 resource "aws_lb_target_group_attachment" "default" {
-  count            = length(data.aws_instances.emr_master_instances.ids)
+  count            = var.master_instance_group_instance_count
   target_group_arn = aws_lb_target_group.default.arn
   target_id        = element(data.aws_instances.emr_master_instances.ids, count.index)
   port             = var.target_group_port
