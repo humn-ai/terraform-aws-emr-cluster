@@ -169,7 +169,10 @@ TO-DO
 | health\_check\_unhealthy\_threshold | The number of consecutive health check failures required before considering the target unhealthy | `number` | `2` | no |
 | http2\_enabled | A boolean flag to enable/disable HTTP/2 | `bool` | `true` | no |
 | http\_ingress\_prefix\_list\_ids | List of prefix list IDs for allowing access to HTTP ingress security group | `list(string)` | `[]` | no |
+| http\_port | The port for the HTTP listener | `number` | `80` | no |
+| http\_redirect | A boolean flag to enable/disable HTTP redirect to HTTPS | `bool` | `false` | no |
 | https\_ingress\_prefix\_list\_ids | List of prefix list IDs for allowing access to HTTPS ingress security group | `list(string)` | `[]` | no |
+| https\_port | The port for the HTTPS listener | `number` | `443` | no |
 | https\_ssl\_policy | The name of the SSL Policy for the listener | `string` | `"ELBSecurityPolicy-2015-05"` | no |
 | idle\_timeout | The time in seconds that the connection is allowed to be idle | `number` | `60` | no |
 | internal | A boolean flag to determine whether the ALB should be internal | `bool` | `false` | no |

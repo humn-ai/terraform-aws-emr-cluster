@@ -427,6 +427,24 @@ variable "security_group_ids" {
   description = "A list of additional security group IDs to allow access to ALB"
 }
 
+variable "http_redirect" {
+  type        = bool
+  default     = false
+  description = "A boolean flag to enable/disable HTTP redirect to HTTPS"
+}
+
+variable "http_port" {
+  type        = number
+  default     = 80
+  description = "The port for the HTTP listener"
+}
+
+variable "https_port" {
+  type        = number
+  default     = 443
+  description = "The port for the HTTPS listener"
+}
+
 variable "https_ssl_policy" {
   type        = string
   description = "The name of the SSL Policy for the listener"
