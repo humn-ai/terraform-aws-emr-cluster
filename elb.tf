@@ -121,7 +121,7 @@ resource "aws_lb_target_group" "default" {
 resource "aws_lb_target_group_attachment" "default" {
   target_group_arn = aws_lb_target_group.default.arn
   target_id        = data.aws_instances.emr_master_instances.ids
-  port             = var.target_group_protocol
+  port             = var.target_group_port
 
   depends_on = [
     data.aws_instances.emr_master_instances,
