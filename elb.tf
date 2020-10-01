@@ -119,9 +119,9 @@ resource "aws_lb_target_group" "default" {
 }
 
 resource "aws_lb_target_group_attachment" "default" {
-  count            = length(data.aws_instances.*.ids)
+  count            = length(data.aws_instances.ids)
   target_group_arn = aws_lb_target_group.default.arn
-  target_id        = data.aws_instances.*.ids
+  target_id        = data.aws_instances.ids
   port             = var.target_group_protocol
 
   depends_on = [
