@@ -1,4 +1,4 @@
-data "aws_instances" "emr_master_nodes" {
+data "aws_instances" "emr_master_instances" {
   instance_tags = {
     Name = "dev-humnai-kylin"
   }
@@ -13,7 +13,7 @@ data "aws_instances" "emr_master_nodes" {
   ]
 }
 
-data "aws_instances" "emr_slave_nodes" {
+data "aws_instances" "emr_core_instances" {
   instance_tags = {
     Name = "dev-humnai-kylin"
   }
