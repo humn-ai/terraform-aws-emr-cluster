@@ -49,18 +49,6 @@ variable "enabled" {
   default     = true
 }
 
-variable "allow_http_access" {
-  type        = bool
-  description = "Set to false to prevent from opening HTTPS access to the EMR cluster via the ELB"
-  default     = false
-}
-
-variable "allow_https_access" {
-  type        = bool
-  description = "Set to false to prevent from opening HTTPS access to the EMR cluster via the ELB"
-  default     = false
-}
-
 variable "allow_ssh_access" {
   type        = bool
   description = "Set to false to prevent from opening SSH access to the EMR cluster from allowed CIDR ranges"
@@ -419,6 +407,24 @@ variable "internal" {
   type        = bool
   default     = false
   description = "A boolean flag to determine whether the ALB should be internal"
+}
+
+variable "allow_http_access" {
+  type        = bool
+  description = "Set to false to prevent from opening HTTPS access to the EMR cluster via the ELB"
+  default     = false
+}
+
+variable "allow_https_access" {
+  type        = bool
+  description = "Set to false to prevent from opening HTTPS access to the EMR cluster via the ELB"
+  default     = false
+}
+
+variable "security_group_ids" {
+  type        = list(string)
+  default     = []
+  description = "A list of additional security group IDs to allow access to ALB"
 }
 
 variable "https_ssl_policy" {
