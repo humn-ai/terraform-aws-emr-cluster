@@ -124,7 +124,7 @@ resource "aws_security_group_rule" "master_ingress_alb_security_group" {
 }
 
 resource "aws_security_group_rule" "master_ingress_cidr_blocks" {
-  count             = var.enabled && allow_all_access == true && length(var.master_allowed_cidr_blocks) > 0 ? 1 : 0
+  count             = var.enabled && var.allow_all_access == true && length(var.master_allowed_cidr_blocks) > 0 ? 1 : 0
   description       = "Allow inbound traffic from CIDR blocks"
   type              = "ingress"
   from_port         = 0
@@ -135,7 +135,7 @@ resource "aws_security_group_rule" "master_ingress_cidr_blocks" {
 }
 
 resource "aws_security_group_rule" "master_ingress_ssh_cidr_blocks" {
-  count             = var.enabled && allow_ssh_access == true && length(var.master_allowed_cidr_blocks) > 0 ? 1 : 0
+  count             = var.enabled && var.allow_ssh_access == true && length(var.master_allowed_cidr_blocks) > 0 ? 1 : 0
   description       = "Allow inbound traffic from CIDR blocks"
   type              = "ingress"
   from_port         = 22
@@ -177,7 +177,7 @@ resource "aws_security_group_rule" "slave_ingress_security_groups" {
 }
 
 resource "aws_security_group_rule" "slave_ingress_cidr_blocks" {
-  count             = var.enabled && allow_all_access == true && length(var.slave_allowed_cidr_blocks) > 0 ? 1 : 0
+  count             = var.enabled && var.allow_all_access == true && length(var.slave_allowed_cidr_blocks) > 0 ? 1 : 0
   description       = "Allow inbound traffic from CIDR blocks"
   type              = "ingress"
   from_port         = 0

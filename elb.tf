@@ -11,7 +11,7 @@ resource "aws_security_group_rule" "alb_egress" {
   to_port           = "0"
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.default.id
+  security_group_id = aws_security_group.alb.id
 }
 
 resource "aws_security_group_rule" "alb_http_ingress" {
@@ -22,7 +22,7 @@ resource "aws_security_group_rule" "alb_http_ingress" {
   protocol          = "tcp"
   cidr_blocks       = var.alb_allowed_cidr_blocks
   prefix_list_ids   = var.http_ingress_prefix_list_ids
-  security_group_id = aws_security_group.default.id
+  security_group_id = aws_security_group.alb.id
 }
 
 resource "aws_security_group_rule" "alb_https_ingress" {
@@ -33,7 +33,7 @@ resource "aws_security_group_rule" "alb_https_ingress" {
   protocol          = "tcp"
   cidr_blocks       = var.alb_allowed_cidr_blocks
   prefix_list_ids   = var.https_ingress_prefix_list_ids
-  security_group_id = aws_security_group.default.id
+  security_group_id = aws_security_group.alb.id
 }
 
 # module "access_logs" {
@@ -64,7 +64,7 @@ resource "aws_lb" "default" {
   load_balancer_type = "application"
 
   security_groups = compact(
-    concat(var.security_group_ids, [aws_security_group.default.id]),
+    concat(var.security_group_ids, [aws_security_group.alb.id]),
   )
 
   subnets                          = var.subnet_ids
