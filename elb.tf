@@ -125,7 +125,7 @@ resource "aws_lb_target_group_attachment" "default" {
   port             = var.target_group_protocol
 
   depends_on = [
-    data.aws_instances.emr_master_instances
+    data.aws_instances.emr_master_instances,
     aws_emr_cluster.default
   ]
 }
