@@ -87,8 +87,8 @@ resource "aws_route53_record" "default" {
   type    = var.type
 
   alias {
-    name                   = aws_elb.default.dns_name
-    zone_id                = aws_elb.default.zone_id
+    name                   = aws_lb.default.dns_name
+    zone_id                = aws_lb.default.zone_id
     evaluate_target_health = true
   }
 }
