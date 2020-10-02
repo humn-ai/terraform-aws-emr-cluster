@@ -81,6 +81,18 @@ resource "aws_lb" "default" {
   #   }
 }
 
+resource "aws_route53_record" "default" {
+  zone_id = var.zone_id
+  name    = var.record_name
+  type    = var.type
+
+  alias {
+    name                   = aws_elb.default.dns_name
+    zone_id                = aws_elb.default.zone_id
+    evaluate_target_health = true
+  }
+}
+
 resource "aws_lb_target_group" "default" {
   name                 = var.target_group_name == "" ? module.label_elb.id : var.target_group_name
   port                 = var.target_group_port

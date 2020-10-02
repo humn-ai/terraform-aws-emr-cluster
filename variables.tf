@@ -403,6 +403,28 @@ variable "kerberos_realm" {
 
 // ALB Variables
 
+variable "enable_route53_record" {
+  type        = bool
+  description = "Set to true to create a simple A record for route53 to route traffic to the ALB alias"
+  default     = false
+}
+
+variable "zone_id" {
+  type        = string
+  description = "(Required) The ID of the hosted zone to contain this record."
+}
+
+variable "record_name" {
+  type        = string
+  description = "(Required) (Required) The name of the record."
+}
+
+variable "type" {
+  type        = string
+  default     = "A"
+  description = "(Optional) The record type. Valid values are A, AAAA, CAA, CNAME, MX, NAPTR, NS, PTR, SOA, SPF, SRV and TXT."
+}
+
 variable "internal" {
   type        = bool
   default     = false
