@@ -409,11 +409,6 @@ variable "enable_route53_record" {
   default     = false
 }
 
-variable "zone_id" {
-  type        = string
-  description = "(Required) The ID of the hosted zone to contain this record."
-}
-
 variable "record_name" {
   type        = string
   description = "(Required) (Required) The name of the record."
