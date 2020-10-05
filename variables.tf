@@ -231,6 +231,16 @@ variable "core_instance_group_autoscaling_policy" {
   default     = null
 }
 
+variable "additional_ec2_role_policy_config" {
+  description = "(Optional) - A list of policy objects be created and added to the EMR EC2 Role"
+  type = list(object({
+    name        = string
+    description = string
+    path        = string
+    policy      = string
+  }))
+}
+
 variable "master_instance_group_instance_type" {
   type        = string
   description = "EC2 instance type for all instances in the Master instance group"

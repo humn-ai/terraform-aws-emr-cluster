@@ -259,6 +259,23 @@ resource "aws_iam_role" "ec2" {
   assume_role_policy = join("", data.aws_iam_policy_document.assume_role_ec2.*.json)
 }
 
+resource "aws_iam_policy" "additional_ec2_role_policy" {
+  for_each    = var.enabled ? { for policy in var.additional_ec2_role_policy_config : policy.name => policy } : {}
+  name        = format(module.label_ec2.id, var.delimiter, each.value.name)
+  path        = each.value.path
+  description = each.value.description
+
+  policy = each.value.policy
+}
+
+resource "aws_iam_role_policy_attachment" "additional_ec2_role_policy_attachment" {
+  for_each   = var.enabled ? { for policy in aws_iam_policy.additional_ec2_role_policy : policy.name => policy } : {}
+  role       = join("", aws_iam_role.ec2.*.name)
+  policy_arn = each.value.arn
+}
+
+
+
 # https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-iam-roles.html
 resource "aws_iam_role_policy_attachment" "ec2" {
   count      = var.enabled ? 1 : 0
