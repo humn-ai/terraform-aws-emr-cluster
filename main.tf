@@ -261,7 +261,7 @@ resource "aws_iam_role" "ec2" {
 
 resource "aws_iam_policy" "additional_ec2_role_policy" {
   for_each    = var.enabled ? { for policy in var.additional_ec2_role_policy_config : policy.name => policy } : {}
-  name        = format(module.label_ec2.id, var.delimiter, each.value.name)
+  name        = format("%s%s%s", "${module.label_ec2.id}${var.delimiter}${each.value.name}")
   path        = each.value.path
   description = each.value.description
 
