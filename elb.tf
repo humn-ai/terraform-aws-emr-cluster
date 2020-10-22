@@ -101,15 +101,15 @@ resource "aws_lb_target_group" "default" {
   target_type          = var.target_group_target_type
   deregistration_delay = var.deregistration_delay
 
-  health_check {
-    protocol            = var.target_group_protocol
-    path                = var.health_check_path
-    timeout             = var.health_check_timeout
-    healthy_threshold   = var.health_check_healthy_threshold
-    unhealthy_threshold = var.health_check_unhealthy_threshold
-    interval            = var.health_check_interval
-    matcher             = var.health_check_matcher
-  }
+  # health_check {
+  #   protocol            = var.target_group_protocol
+  #   path                = var.health_check_path
+  #   timeout             = var.health_check_timeout
+  #   healthy_threshold   = var.health_check_healthy_threshold
+  #   unhealthy_threshold = var.health_check_unhealthy_threshold
+  #   interval            = var.health_check_interval
+  #   matcher             = var.health_check_matcher
+  # }
 
   stickiness {
     enabled = false
