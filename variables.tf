@@ -585,6 +585,12 @@ variable "alb_access_logs_s3_bucket_force_destroy" {
   description = "A boolean that indicates all objects should be deleted from the ALB access logs S3 bucket so that the bucket can be destroyed without error"
 }
 
+variable "load_balancer_type" {
+  type        = string
+  default     = "network"
+  description = "(Optional) The type of load balancer to create. Possible values are application or network. The default value is network."
+}
+
 variable "target_group_port" {
   type        = number
   default     = 80

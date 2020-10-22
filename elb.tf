@@ -61,16 +61,16 @@ resource "aws_lb" "default" {
   name               = module.label_elb.id
   tags               = module.label_elb.tags
   internal           = var.internal
-  load_balancer_type = "application"
+  load_balancer_type = var.load_balancer_type
 
-  security_groups = compact(
+  security_groups = var.load_balancer_type == "network" ? [] : compact(
     concat(var.security_group_ids, [aws_security_group.alb.id]),
   )
 
   subnets                          = var.subnet_ids
   enable_cross_zone_load_balancing = var.cross_zone_load_balancing_enabled
-  enable_http2                     = var.http2_enabled
-  idle_timeout                     = var.idle_timeout
+  enable_http2                     = var.load_balancer_type == "network" ? null : var.http2_enabled
+  idle_timeout                     = var.load_balancer_type == "network" ? null : var.idle_timeout
   ip_address_type                  = var.ip_address_type
   enable_deletion_protection       = var.deletion_protection_enabled
 
@@ -113,8 +113,8 @@ resource "aws_lb_target_group" "default" {
 
   stickiness {
     enabled = false
-    type = "lb_cookie"
-}
+    type    = "lb_cookie"
+  }
 
 
   # dynamic "stickiness" {
