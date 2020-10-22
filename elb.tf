@@ -115,7 +115,7 @@ resource "aws_lb_target_group" "default" {
     for_each = var.stickiness == null ? [] : [var.stickiness]
     content {
       type            = "lb_cookie"
-      cookie_duration = stickiness.value.cookie_duration
+      # cookie_duration = stickiness.value.cookie_duration
       enabled         = var.target_group_protocol == "TCP" ? false : stickiness.value.enabled
     }
   }
