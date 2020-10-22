@@ -587,7 +587,7 @@ variable "alb_access_logs_s3_bucket_force_destroy" {
 
 variable "load_balancer_type" {
   type        = string
-  default     = "network"
+  default     = "application"
   description = "(Optional) The type of load balancer to create. Possible values are application or network. The default value is network."
 }
 
