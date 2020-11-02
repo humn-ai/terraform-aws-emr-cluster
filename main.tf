@@ -113,7 +113,7 @@ resource "aws_security_group_rule" "master_ingress_security_groups" {
 }
 
 resource "aws_security_group_rule" "master_ingress_alb_security_group" {
-  count                    = var.enabled && length(aws_security_group.alb.*.id) > 0  ? 1 : 0
+  count                    = var.enabled && length(aws_security_group.alb.*.id) > 0 ? 1 : 0
   description              = "Allow inbound traffic from the ALB"
   type                     = "ingress"
   from_port                = 0
@@ -344,8 +344,8 @@ resource "aws_emr_cluster" "default" {
     emr_managed_slave_security_group  = join("", aws_security_group.managed_slave.*.id)
     service_access_security_group     = var.subnet_type == "private" ? join("", aws_security_group.managed_service_access.*.id) : null
     instance_profile                  = join("", aws_iam_instance_profile.ec2.*.arn)
-    additional_master_security_groups = join(",", concat(aws_security_group.master.*.id, aws_security_group.alb.*.id))
-    additional_slave_security_groups  = join(",", concat(aws_security_group.slave.*.id, aws_security_group.alb.*.id))
+    additional_master_security_groups = join("", aws_security_group.master.*.id)
+    additional_slave_security_groups  = join("", aws_security_group.slave.*.id)
   }
 
   termination_protection            = var.termination_protection
