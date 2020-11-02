@@ -83,7 +83,7 @@ resource "aws_lb" "default" {
 
 resource "aws_route53_record" "default" {
   zone_id = var.zone_id
-  name    = var.record_name
+  name    = "${environment}-${var.record_name}"
   type    = var.type
 
   alias {
