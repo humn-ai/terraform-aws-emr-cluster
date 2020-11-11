@@ -452,7 +452,7 @@ resource "aws_emr_instance_group" "task" {
 module "dns_master" {
   source  = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-hostname.git?ref=tags/0.5.0"
   enabled = var.enabled && var.zone_id != null && var.zone_id != "" ? true : false
-  name    = var.master_dns_name != null && var.master_dns_name != "" ? var.master_dns_name : "emr-master-${environment}-${var.name}"
+  name    = var.master_dns_name != null && var.master_dns_name != "" ? var.master_dns_name : "emr-master-${var.environment}-${var.name}"
   zone_id = var.zone_id
   records = coalescelist(aws_emr_cluster.default.*.master_public_dns, [""])
 }
