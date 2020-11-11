@@ -1,6 +1,6 @@
 data "aws_instances" "emr_master_instances" {
   instance_tags = {
-    Name = "dev-humnai-kylin"
+    Name = "${var.environment}-humnai-kylin"
   }
 
   filter {
