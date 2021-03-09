@@ -123,14 +123,14 @@ resource "aws_security_group_rule" "master_ingress_alb_security_group" {
   security_group_id        = join("", aws_security_group.master.*.id)
 }
 
-resource "aws_security_group_rule" "allow_tcp_from_master_to_service" {
-  type                     = "ingress"
-  from_port                = 9443
-  to_port                  = 9443
-  protocol                 = "tcp"
-  security_group_id        = join("", aws_security_group.managed_service_access.*.id)
-  source_security_group_id = join("", aws_security_group.managed_master.*.id)
-}
+# resource "aws_security_group_rule" "allow_tcp_from_master_to_service" {
+#   type                     = "ingress"
+#   from_port                = 9443
+#   to_port                  = 9443
+#   protocol                 = "tcp"
+#   security_group_id        = join("", aws_security_group.managed_service_access.*.id)
+#   source_security_group_id = join("", aws_security_group.managed_master.*.id)
+# }
 
 # resource "aws_security_group_rule" "master_ingress_cidr_blocks" {
 #   count             = var.enabled && var.allow_all_access == true && length(var.master_allowed_cidr_blocks) > 0 ? 1 : 0
