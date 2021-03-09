@@ -128,8 +128,8 @@ resource "aws_security_group_rule" "allow_tcp_from_master_to_service" {
   from_port                = 9443
   to_port                  = 9443
   protocol                 = "tcp"
-  security_group_id        = ""
-  source_security_group_id = ""
+  security_group_id        = join("", aws_security_group.managed_service_access.*.id)
+  source_security_group_id = join("", aws_security_group.managed_master.*.id)
 }
 
 # resource "aws_security_group_rule" "master_ingress_cidr_blocks" {
