@@ -6,7 +6,7 @@ module "label" {
   attributes         = var.attributes
   delimiter          = var.delimiter
   additional_tag_map = {} /* Additional attributes (e.g. 1) */
-  label_order        = ["environment", "namespace", "name", "attributes"]
+  label_order        = var.label_order
 }
 
 module "label_emr" {

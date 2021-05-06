@@ -713,3 +713,13 @@ variable "tags" {
   description = "(Optional) - Additional tags"
 }
 
+variable "label_order" {
+  type        = list(string)
+  default     = null
+  description = <<-EOT
+    The naming order of the id output and Name tag.
+    Defaults to ["namespace", "environment", "stage", "name", "attributes"].
+    You can omit any of the 5 elements, but at least one must be present.
+  EOT
+}
+
