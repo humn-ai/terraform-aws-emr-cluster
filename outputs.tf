@@ -42,3 +42,8 @@ output "ec2_role" {
   value       = join("", aws_iam_role.ec2.*.name)
   description = "Role name of EMR EC2 instances so users can attach more policies"
 }
+
+output "context" {
+  value       = module.label.context
+  description = "Context of this module to pass to other label modules"
+}
