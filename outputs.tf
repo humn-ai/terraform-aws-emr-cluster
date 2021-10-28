@@ -23,6 +23,11 @@ output "master_public_dns" {
   description = "Master public DNS"
 }
 
+output "kylin_public_dns" {
+  value       = join("", aws_route53_record.default.*.fqdn)
+  description = "DNS of Kylin host"
+}
+
 output "master_security_group_id" {
   value       = join("", aws_security_group.master.*.id)
   description = "Master security group ID"
