@@ -335,7 +335,7 @@ locals {
       args = [md5(jsonencode(var.configurations_json))]
     }],
     [{
-      path = "${file("${path.module}/bootstrap.sh")}"
+      path = file("${path.module}/bootstrap.sh")
       name = "Install AWS Systems Session Manager (SSM) onto EMR host"
       args = ""
     }],
