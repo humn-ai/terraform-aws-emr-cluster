@@ -47,7 +47,7 @@ resource "aws_lb" "default" {
   load_balancer_type = var.load_balancer_type
 
   security_groups = var.load_balancer_type == "network" ? [] : compact(
-    concat(var.security_group_ids, [aws_security_group.alb.id]),
+    concat(var.security_group_ids, [aws_security_group.alb.*.id]),
   )
 
   subnets                          = var.subnet_ids
