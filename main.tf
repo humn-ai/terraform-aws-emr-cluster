@@ -337,7 +337,7 @@ locals {
     [{
       path = file("${path.module}/bootstrap.sh")
       name = "Install AWS Systems Session Manager (SSM) onto EMR host"
-      args = ""
+      args = [""]
     }],
     var.bootstrap_action
   )
