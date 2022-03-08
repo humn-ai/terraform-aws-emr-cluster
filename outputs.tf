@@ -24,7 +24,7 @@ output "master_public_dns" {
 }
 
 output "kylin_public_dns" {
-  value       = join("", aws_route53_record.default.*.fqdn)
+  value       = var.enable_elb ? join("", aws_route53_record.default.*.fqdn) : "no DNS set"
   description = "DNS of Kylin host"
 }
 
