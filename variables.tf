@@ -42,7 +42,7 @@ variable "availability_zones" {
 # Variables: TF-MOD-EMR
 # -----------------------------------------------------------------------------
 
-variable "enable_elb" {
+variable "enable_alb" {
   type        = bool
   description = "Set to false to from deploying an ELB"
   default     = false
