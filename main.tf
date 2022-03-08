@@ -288,7 +288,7 @@ resource "aws_iam_role_policy_attachment" "additional_ec2_role_policy_attachment
 resource "aws_iam_role_policy_attachment" "existing_ec2_role_policy" {
   count      = var.enabled ? length(local.existing_policy_arns) : 0
   role       = join("", aws_iam_role.ec2.*.name)
-  policy_arn = var.existing_policy_arns[count.index]
+  policy_arn = local.existing_policy_arns[count.index]
 }
 
 
