@@ -42,6 +42,12 @@ variable "availability_zones" {
 # Variables: TF-MOD-EMR
 # -----------------------------------------------------------------------------
 
+variable "enable_elb" {
+  type        = bool
+  description = "Set to false to from deploying an ELB"
+  default     = false
+}
+
 variable "allow_ssh_access" {
   type        = bool
   description = "Set to false to prevent from opening SSH access to the EMR cluster from allowed CIDR ranges"
