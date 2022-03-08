@@ -427,6 +427,7 @@ variable "enable_route53_record" {
 variable "record_name" {
   type        = string
   description = "(Required) (Required) The name of the record."
+  default     = ""
 }
 
 variable "type" {
@@ -510,6 +511,7 @@ variable "https_ingress_prefix_list_ids" {
 variable "subnet_ids" {
   type        = list(string)
   description = "A list of subnet IDs to associate with ALB"
+  default     = []
 }
 
 variable "cross_zone_load_balancing_enabled" {
