@@ -342,13 +342,14 @@ locals {
     var.bootstrap_action
   )
 
-  existing_policy_arns = concat{[
+  existing_policy_arns = concat(
+    [
       "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
       "arn:aws:iam::aws:policy/AmazonSSMDirectoryServiceAccess",
       "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
     ],
     var.existing_policy_arns
-  }
+  )
 
   kerberos_attributes = {
     ad_domain_join_password              = var.kerberos_ad_domain_join_password
