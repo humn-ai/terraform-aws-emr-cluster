@@ -48,6 +48,13 @@ variable "enable_elb" {
   default     = false
 }
 
+variable "enable_ssm" {
+  type        = bool
+  description = "Set to false to to prevent installing AWS System Session Manager (SSM)"
+  default     = true
+}
+
+
 variable "allow_ssh_access" {
   type        = bool
   description = "Set to false to prevent from opening SSH access to the EMR cluster from allowed CIDR ranges"

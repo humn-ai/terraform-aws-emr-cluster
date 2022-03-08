@@ -334,6 +334,14 @@ locals {
       name = "Dummy bootstrap action to prevent EMR cluster recration when configuration_json has parameter javax.jdo.option.ConnectionPassword.",
       args = [md5(jsonencode(var.configurations_json))]
     }],
+      install ssm ?
+    {
+      path = "${file("${path.module}/bootstrap.sh")}"
+      name = "Install AWS Systems Session Manager (SSM) onto EMR host"
+      args = ""
+    }
+    :
+    [],
     var.bootstrap_action
   )
 
