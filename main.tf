@@ -240,6 +240,7 @@ resource "aws_iam_role_policy_attachment" "emr" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonElasticMapReduceRole"
 }
 
+
 /*
 Application processes that run on top of the Hadoop ecosystem on cluster instances use this role when they call other AWS services.
 For accessing data in Amazon S3 using EMRFS, you can specify different roles to be assumed based on the user or group making the request,
@@ -277,12 +278,18 @@ resource "aws_iam_policy" "additional_ec2_role_policy" {
   policy = each.value.policy
 }
 
+
 resource "aws_iam_role_policy_attachment" "additional_ec2_role_policy_attachment" {
   for_each   = var.enabled ? { for policy in aws_iam_policy.additional_ec2_role_policy : policy.name => policy } : {}
   role       = join("", aws_iam_role.ec2.*.name)
   policy_arn = each.value.arn
 }
 
+resource "aws_iam_role_policy_attachment" "existing_ec2_role_policy" {
+  count      = var.enabled && var.existing_policy_arns != [] ? length(var.existing_policy_arns) : 0
+  role       = join("", aws_iam_role.ec2.*.name)
+  policy_arn = var.existing_policy_arns[count.index]
+}
 
 
 # https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-iam-roles.html

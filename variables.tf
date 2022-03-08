@@ -48,6 +48,12 @@ variable "allow_ssh_access" {
   default     = false
 }
 
+variable "existing_policy_arns" {
+  description = "(Optional) - A list of existing policy ARNs to associate with the role"
+  type        = list(string)
+  default     = []
+}
+
 variable "allow_all_access" {
   type        = bool
   description = "Set to false to prevent from opening all ports for access to the EMR cluster from allowed CIDR ranges"
