@@ -286,7 +286,7 @@ resource "aws_iam_role_policy_attachment" "additional_ec2_role_policy_attachment
 }
 
 resource "aws_iam_role_policy_attachment" "existing_ec2_role_policy" {
-  count      = var.enabled && var.existing_policy_arns != [] ? length(var.existing_policy_arns) : 0
+  count      = var.enabled ? length(local.existing_policy_arns) : 0
   role       = join("", aws_iam_role.ec2.*.name)
   policy_arn = var.existing_policy_arns[count.index]
 }
@@ -334,16 +334,21 @@ locals {
       name = "Dummy bootstrap action to prevent EMR cluster recration when configuration_json has parameter javax.jdo.option.ConnectionPassword.",
       args = [md5(jsonencode(var.configurations_json))]
     }],
-      install ssm ?
-    {
+    [{
       path = "${file("${path.module}/bootstrap.sh")}"
       name = "Install AWS Systems Session Manager (SSM) onto EMR host"
       args = ""
-    }
-    :
-    [],
+    }],
     var.bootstrap_action
   )
+
+  existing_policy_arns = concat{[
+      "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+      "arn:aws:iam::aws:policy/AmazonSSMDirectoryServiceAccess",
+      "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+    ],
+    var.existing_policy_arns
+  }
 
   kerberos_attributes = {
     ad_domain_join_password              = var.kerberos_ad_domain_join_password
