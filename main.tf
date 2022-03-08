@@ -113,7 +113,7 @@ resource "aws_security_group_rule" "master_ingress_security_groups" {
 }
 
 resource "aws_security_group_rule" "master_ingress_alb_security_group" {
-  count                    = var.enabled && var.var.enable_alb ? 1 : 0
+  count                    = var.enabled && var.enable_alb ? 1 : 0
   description              = "Allow inbound traffic from the ALB"
   type                     = "ingress"
   from_port                = 0
