@@ -337,7 +337,7 @@ locals {
     [{
       path = "s3://humnai-dev-internal-scripts-bucket/scripts/ssm_emr_bootstrap.sh"
       name = "Install AWS Systems Session Manager (SSM) onto EMR host"
-      args = [""]
+      args = []
     }],
     var.bootstrap_action
   )
