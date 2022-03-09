@@ -335,7 +335,7 @@ locals {
       args = [md5(jsonencode(var.configurations_json))]
     }],
     [{
-      path = "s3://humnai-dev-internal-scripts-bucket/ssm_emr_bootstrap.sh"
+      path = "s3://humnai-dev-internal-scripts-bucket/scripts/ssm_emr_bootstrap.sh"
       name = "Install AWS Systems Session Manager (SSM) onto EMR host"
       args = [""]
     }],
