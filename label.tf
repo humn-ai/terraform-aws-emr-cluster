@@ -171,70 +171,70 @@ module "label_emr" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.25.0"
   enabled    = var.enabled
   context    = module.label.context
-  attributes = compact(concat(module.label.attributes, list("emr")))
+  attributes = compact(concat(module.label.attributes, tolist(["emr"])))
 }
 
 module "label_ec2" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.25.0"
   enabled    = var.enabled
   context    = module.label.context
-  attributes = compact(concat(module.label.attributes, list("ec2")))
+  attributes = compact(concat(module.label.attributes, tolist(["ec2"])))
 }
 
 module "label_ec2_autoscaling" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.25.0"
   enabled    = var.enabled
   context    = module.label.context
-  attributes = compact(concat(module.label.attributes, list("ec2", "autoscaling")))
+  attributes = compact(concat(module.label.attributes, tolist(["ec2", "autoscaling"])))
 }
 
 module "label_master" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.25.0"
   enabled    = var.enabled
   context    = module.label.context
-  attributes = compact(concat(module.label.attributes, list("master")))
+  attributes = compact(concat(module.label.attributes, tolist(["master"])))
 }
 
 module "label_slave" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.25.0"
   enabled    = var.enabled
   context    = module.label.context
-  attributes = compact(concat(module.label.attributes, list("slave")))
+  attributes = compact(concat(module.label.attributes, tolist(["slave"])))
 }
 
 module "label_core" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.25.0"
   enabled    = var.enabled
   context    = module.label.context
-  attributes = compact(concat(module.label.attributes, list("core")))
+  attributes = compact(concat(module.label.attributes, tolist(["core"])))
 }
 
 module "label_task" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.25.0"
   enabled    = var.enabled && var.create_task_instance_group
   context    = module.label.context
-  attributes = compact(concat(module.label.attributes, list("task")))
+  attributes = compact(concat(module.label.attributes, tolist(["task"])))
 }
 
 module "label_master_managed" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.25.0"
   enabled    = var.enabled
   context    = module.label.context
-  attributes = compact(concat(module.label.attributes, list("master", "managed")))
+  attributes = compact(concat(module.label.attributes, tolist(["master", "managed"])))
 }
 
 module "label_slave_managed" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.25.0"
   enabled    = var.enabled
   context    = module.label.context
-  attributes = compact(concat(module.label.attributes, list("slave", "managed")))
+  attributes = compact(concat(module.label.attributes, tolist(["slave", "managed"])))
 }
 
 module "label_service_managed" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.25.0"
   enabled    = var.enabled
   context    = module.label.context
-  attributes = compact(concat(module.label.attributes, list("service", "managed")))
+  attributes = compact(concat(module.label.attributes, tolist(["service", "managed"])))
 }
 
 
@@ -242,5 +242,5 @@ module "label_alb" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.25.0"
   enabled    = var.enabled
   context    = module.label.context
-  attributes = compact(concat(module.label.attributes, list("alb")))
+  attributes = compact(concat(module.label.attributes, tolist(["alb"])))
 }
