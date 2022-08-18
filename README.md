@@ -77,7 +77,7 @@ module "vpc" {
 
   ipv4_primary_cidr_block = "172.19.0.0/16"
 
-  context = module.this.context
+  context = module.label.context
 }
 
 module "subnets" {
@@ -92,7 +92,7 @@ module "subnets" {
   nat_gateway_enabled  = false
   nat_instance_enabled = false
 
-  context = module.this.context
+  context = module.label.context
 }
 
 module "s3_log_storage" {
@@ -197,16 +197,16 @@ Available targets:
 |------|--------|---------|
 | <a name="module_label"></a> [label](#module\_label) | git::https://github.com/cloudposse/terraform-null-label.git | tags/0.25.0 |
 | <a name="module_label_alb"></a> [label\_alb](#module\_label\_alb) | git::https://github.com/cloudposse/terraform-null-label.git | tags/0.25.0 |
-| <a name="module_label_core"></a> [label\_core](#module\_label\_core) | cloudposse/label/null | 0.25.0 |
-| <a name="module_label_ec2"></a> [label\_ec2](#module\_label\_ec2) | cloudposse/label/null | 0.25.0 |
-| <a name="module_label_ec2_autoscaling"></a> [label\_ec2\_autoscaling](#module\_label\_ec2\_autoscaling) | cloudposse/label/null | 0.25.0 |
-| <a name="module_label_emr"></a> [label\_emr](#module\_label\_emr) | cloudposse/label/null | 0.25.0 |
-| <a name="module_label_master"></a> [label\_master](#module\_label\_master) | cloudposse/label/null | 0.25.0 |
-| <a name="module_label_master_managed"></a> [label\_master\_managed](#module\_label\_master\_managed) | cloudposse/label/null | 0.25.0 |
-| <a name="module_label_service_managed"></a> [label\_service\_managed](#module\_label\_service\_managed) | cloudposse/label/null | 0.25.0 |
-| <a name="module_label_slave"></a> [label\_slave](#module\_label\_slave) | cloudposse/label/null | 0.25.0 |
-| <a name="module_label_slave_managed"></a> [label\_slave\_managed](#module\_label\_slave\_managed) | cloudposse/label/null | 0.25.0 |
-| <a name="module_label_task"></a> [label\_task](#module\_label\_task) | cloudposse/label/null | 0.25.0 |
+| <a name="module_label_core"></a> [label\_core](#module\_label\_core) | git::https://github.com/cloudposse/terraform-null-label.git | tags/0.25.0 |
+| <a name="module_label_ec2"></a> [label\_ec2](#module\_label\_ec2) | git::https://github.com/cloudposse/terraform-null-label.git | tags/0.25.0 |
+| <a name="module_label_ec2_autoscaling"></a> [label\_ec2\_autoscaling](#module\_label\_ec2\_autoscaling) | git::https://github.com/cloudposse/terraform-null-label.git | tags/0.25.0 |
+| <a name="module_label_emr"></a> [label\_emr](#module\_label\_emr) | git::https://github.com/cloudposse/terraform-null-label.git | tags/0.25.0 |
+| <a name="module_label_master"></a> [label\_master](#module\_label\_master) | git::https://github.com/cloudposse/terraform-null-label.git | tags/0.25.0 |
+| <a name="module_label_master_managed"></a> [label\_master\_managed](#module\_label\_master\_managed) | git::https://github.com/cloudposse/terraform-null-label.git | tags/0.25.0 |
+| <a name="module_label_service_managed"></a> [label\_service\_managed](#module\_label\_service\_managed) | git::https://github.com/cloudposse/terraform-null-label.git | tags/0.25.0 |
+| <a name="module_label_slave"></a> [label\_slave](#module\_label\_slave) | git::https://github.com/cloudposse/terraform-null-label.git | tags/0.25.0 |
+| <a name="module_label_slave_managed"></a> [label\_slave\_managed](#module\_label\_slave\_managed) | git::https://github.com/cloudposse/terraform-null-label.git | tags/0.25.0 |
+| <a name="module_label_task"></a> [label\_task](#module\_label\_task) | git::https://github.com/cloudposse/terraform-null-label.git | tags/0.25.0 |
 
 ## Resources
 

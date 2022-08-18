@@ -260,7 +260,7 @@ resource "aws_iam_role" "emr" {
   assume_role_policy   = join("", data.aws_iam_policy_document.assume_role_emr.*.json)
   permissions_boundary = var.emr_role_permissions_boundary
 
-  tags = module.this.tags
+  tags = module.label.tags
 }
 
 # https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-iam-roles.html
@@ -300,7 +300,7 @@ resource "aws_iam_role" "ec2" {
   assume_role_policy   = join("", data.aws_iam_policy_document.assume_role_ec2.*.json)
   permissions_boundary = var.ec2_role_permissions_boundary
 
-  tags = module.this.tags
+  tags = module.label.tags
 }
 
 # https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-iam-roles.html
@@ -316,7 +316,7 @@ resource "aws_iam_instance_profile" "ec2" {
 
   name = join("", aws_iam_role.ec2.*.name)
   role = join("", aws_iam_role.ec2.*.name)
-  tags = module.this.tags
+  tags = module.label.tags
 }
 
 /*
@@ -331,7 +331,7 @@ resource "aws_iam_role" "ec2_autoscaling" {
   assume_role_policy   = join("", data.aws_iam_policy_document.assume_role_emr.*.json)
   permissions_boundary = var.ec2_autoscaling_role_permissions_boundary
 
-  tags = module.this.tags
+  tags = module.label.tags
 }
 
 # https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-iam-roles.html
@@ -345,7 +345,7 @@ resource "aws_iam_role_policy_attachment" "ec2_autoscaling" {
 resource "aws_emr_cluster" "default" {
   count = local.enabled ? 1 : 0
 
-  name          = module.this.id
+  name          = module.label.id
   release_label = var.release_label
 
   # https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-sg-specify.html
@@ -457,7 +457,7 @@ resource "aws_emr_cluster" "default" {
     ignore_changes = [kerberos_attributes, step, configurations_json]
   }
 
-  tags = module.this.tags
+  tags = module.label.tags
 }
 
 # https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-master-core-task-nodes.html
@@ -492,5 +492,5 @@ resource "aws_vpc_endpoint" "vpc_endpoint_s3" {
   service_name    = format("com.amazonaws.%s.s3", var.region)
   auto_accept     = true
   route_table_ids = [var.route_table_id]
-  tags            = module.this.tags
+  tags            = module.label.tags
 }

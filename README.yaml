@@ -48,7 +48,7 @@ usage: |2-
 
     ipv4_primary_cidr_block = "172.19.0.0/16"
 
-    context = module.this.context
+    context = module.label.context
   }
 
   module "subnets" {
@@ -63,7 +63,7 @@ usage: |2-
     nat_gateway_enabled  = false
     nat_instance_enabled = false
 
-    context = module.this.context
+    context = module.label.context
   }
 
   module "s3_log_storage" {

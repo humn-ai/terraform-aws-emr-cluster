@@ -8,14 +8,14 @@
 # Cloud Posse's standard configuration inputs suitable for passing
 # to Cloud Posse modules.
 #
-# Modules should access the whole context as `module.this.context`
+# Modules should access the whole context as `module.label.context`
 # to get the input variables with nulls for defaults,
-# for example `context = module.this.context`,
-# and access individual variables as `module.this.<var>`,
+# for example `context = module.label.context`,
+# and access individual variables as `module.label.<var>`,
 # with final values filled in.
 #
-# For example, when using defaults, `module.this.context.delimiter`
-# will be null, and `module.this.delimiter` will be `-` (hyphen).
+# For example, when using defaults, `module.label.context.delimiter`
+# will be null, and `module.label.delimiter` will be `-` (hyphen).
 #
 
 module "label" {
