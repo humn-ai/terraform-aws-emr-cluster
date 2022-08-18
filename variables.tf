@@ -1,88 +1,80 @@
-
-# -----------------------------------------------------------------------------
-# Variables: Common AWS Provider - Autoloaded from Terragrunt
-# -----------------------------------------------------------------------------
-
-variable "aws_region" {
-  description = "The AWS region (e.g. ap-southeast-2). Autoloaded from region.tfvars."
-  type        = string
-  default     = ""
-}
-
-variable "aws_account_id" {
-  description = "The AWS account id of the provider being deployed to (e.g. 12345678). Autoloaded from account.tfvars"
-  type        = string
-  default     = ""
-}
-
-variable "aws_assume_role_arn" {
-  description = "(Optional) - ARN of the IAM role when optionally connecting to AWS via assumed role. Autoloaded from account.tfvars."
-  type        = string
-  default     = ""
-}
-
-variable "aws_assume_role_session_name" {
-  description = "(Optional) - The session name to use when making the AssumeRole call."
-  type        = string
-  default     = ""
-}
-
-variable "aws_assume_role_external_id" {
-  description = "(Optional) - The external ID to use when making the AssumeRole call."
-  type        = string
-  default     = ""
-}
-
-variable "availability_zones" {
-  description = "(Required) - The AWS avaialbility zones (e.g. ap-southeast-2a/b/c). Autoloaded from region.tfvars."
-  type        = list(string)
-}
-
-# -----------------------------------------------------------------------------
-# Variables: TF-MOD-EMR
-# -----------------------------------------------------------------------------
-
-variable "enable_alb" {
-  type        = bool
-  description = "Set to false to from deploying an ELB"
-  default     = false
-}
-
-
-variable "allow_ssh_access" {
-  type        = bool
-  description = "Set to false to prevent from opening SSH access to the EMR cluster from allowed CIDR ranges"
-  default     = false
-}
-
-variable "existing_policy_arns" {
-  description = "(Optional) - A list of existing policy ARNs to associate with the role"
-  type        = list(string)
-  default     = []
-}
-
-variable "allow_all_access" {
-  type        = bool
-  description = "Set to false to prevent from opening all ports for access to the EMR cluster from allowed CIDR ranges"
-  default     = false
-}
-
 variable "zone_id" {
   type        = string
   description = "Route53 parent zone ID. If provided (not empty), the module will create sub-domain DNS records for the masters and slaves"
   default     = null
 }
 
+variable "use_existing_managed_master_security_group" {
+  type        = bool
+  description = "If set to `true`, will use variable `managed_master_security_group` using an existing security group that was created outside of this module"
+  default     = false
+}
+
+variable "use_existing_managed_slave_security_group" {
+  type        = bool
+  description = "If set to `true`, will use variable `managed_slave_security_group` using an existing security group that was created outside of this module"
+  default     = false
+}
+
+variable "use_existing_additional_master_security_group" {
+  type        = bool
+  description = "If set to `true`, will use variable `additional_master_security_group` using an existing security group that was created outside of this module"
+  default     = false
+}
+
+variable "use_existing_additional_slave_security_group" {
+  type        = bool
+  description = "If set to `true`, will use variable `additional_slave_security_group` using an existing security group that was created outside of this module"
+  default     = false
+}
+
+variable "use_existing_service_access_security_group" {
+  type        = bool
+  description = "If set to `true`, will use variable `service_access_security_group` using an existing security group that was created outside of this module"
+  default     = false
+}
+
+variable "managed_master_security_group" {
+  type        = string
+  default     = ""
+  description = "The id of the existing managed security group that will be used for EMR master node. If empty, a new security group will be created"
+}
+
+variable "managed_slave_security_group" {
+  type        = string
+  default     = ""
+  description = "The id of the existing managed security group that will be used for EMR core & task nodes. If empty, a new security group will be created"
+}
+
+variable "additional_master_security_group" {
+  type        = string
+  default     = ""
+  description = "The id of the existing additional security group that will be used for EMR master node. If empty, a new security group will be created"
+}
+
+variable "additional_slave_security_group" {
+  type        = string
+  default     = ""
+  description = "The id of the existing additional security group that will be used for EMR core & task nodes. If empty, a new security group will be created"
+}
+
+variable "service_access_security_group" {
+  type        = string
+  default     = ""
+  description = "The id of the existing additional security group that will be used for EMR core & task nodes. If empty, a new security group will be created"
+}
+
+
 variable "master_allowed_security_groups" {
   type        = list(string)
   default     = []
-  description = "List of security groups to be allowed to connect to the master instances"
+  description = "List of security group ids to be allowed to connect to the master instances"
 }
 
 variable "slave_allowed_security_groups" {
   type        = list(string)
   default     = []
-  description = "List of security groups to be allowed to connect to the slave instances"
+  description = "List of security group ids to be allowed to connect to the slave instances"
 }
 
 variable "master_allowed_cidr_blocks" {
@@ -104,8 +96,7 @@ variable "vpc_id" {
 
 variable "master_dns_name" {
   type        = string
-  description = "Name of the cluster CNAME record to create in the parent DNS zone specified by `zone_id`. If left empty, the name will be auto-asigned using the format `emr-master-var.name`"
-  default     = null
+  description = "(Required) - Name of the ALB record to create in the parent DNS zone specified by `zone_id`."
 }
 
 variable "termination_protection" {
@@ -138,6 +129,42 @@ variable "custom_ami_id" {
   default     = null
 }
 
+variable "ec2_role_enabled" {
+  type        = bool
+  description = "If set to `false`, will use `existing_ec2_instance_profile_arn` for an existing EC2 IAM role that was created outside of this module"
+  default     = true
+}
+
+variable "ec2_autoscaling_role_enabled" {
+  type        = bool
+  description = "If set to `false`, will use `existing_ec2_autoscaling_role_arn` for an existing EC2 autoscaling IAM role that was created outside of this module"
+  default     = true
+}
+
+variable "service_role_enabled" {
+  type        = bool
+  description = "If set to `false`, will use `existing_service_role_arn` for an existing IAM role that was created outside of this module"
+  default     = true
+}
+
+variable "existing_ec2_instance_profile_arn" {
+  type        = string
+  description = "ARN of an existing EC2 instance profile"
+  default     = ""
+}
+
+variable "existing_ec2_autoscaling_role_arn" {
+  type        = string
+  description = "ARN of an existing EC2 autoscaling role to attach to the cluster"
+  default     = ""
+}
+
+variable "existing_service_role_arn" {
+  type        = string
+  description = "ARN of an existing EMR service role to attach to the cluster"
+  default     = ""
+}
+
 variable "visible_to_all_users" {
   type        = bool
   description = "Whether the job flow is visible to all IAM users of the AWS account associated with the job flow"
@@ -166,6 +193,11 @@ variable "key_name" {
   type        = string
   description = "Amazon EC2 key pair that can be used to ssh to the master node as the user called `hadoop`"
   default     = null
+}
+
+variable "region" {
+  type        = string
+  description = "AWS region"
 }
 
 variable "subnet_id" {
@@ -235,16 +267,6 @@ variable "core_instance_group_autoscaling_policy" {
   type        = string
   description = "String containing the EMR Auto Scaling Policy JSON for the Core instance group"
   default     = null
-}
-
-variable "additional_ec2_role_policy_config" {
-  description = "(Optional) - A list of policy objects be created and added to the EMR EC2 Role"
-  type = list(object({
-    name        = string
-    description = string
-    path        = string
-    policy      = string
-  }))
 }
 
 variable "master_instance_group_instance_type" {
@@ -417,265 +439,90 @@ variable "kerberos_realm" {
   default     = "EC2.INTERNAL"
 }
 
-// ALB Variables
-
-variable "enable_route53_record" {
-  type        = bool
-  description = "Set to true to create a simple A record for route53 to route traffic to the ALB alias"
-  default     = false
+variable "steps" {
+  type = list(object({
+    name              = string
+    action_on_failure = string
+    hadoop_jar_step = object({
+      args       = list(string)
+      jar        = string
+      main_class = string
+      properties = map(string)
+    })
+  }))
+  description = "List of steps to run when creating the cluster."
+  default     = []
 }
 
-variable "record_name" {
+variable "emr_role_permissions_boundary" {
   type        = string
-  description = "(Required) (Required) The name of the record."
+  description = "The Permissions Boundary ARN to apply to the EMR Role."
   default     = ""
 }
 
-variable "type" {
+variable "ec2_role_permissions_boundary" {
   type        = string
-  default     = "A"
-  description = "(Optional) The record type. Valid values are A, AAAA, CAA, CNAME, MX, NAPTR, NS, PTR, SOA, SPF, SRV and TXT."
+  description = "The Permissions Boundary ARN to apply to the EC2 Role."
+  default     = ""
 }
 
-variable "internal" {
-  type        = bool
-  default     = false
-  description = "A boolean flag to determine whether the ALB should be internal"
-}
-
-variable "allow_http_access" {
-  type        = bool
-  description = "Set to false to prevent from opening HTTPS access to the EMR cluster via the ELB"
-  default     = false
-}
-
-variable "allow_https_access" {
-  type        = bool
-  description = "Set to false to prevent from opening HTTPS access to the EMR cluster via the ELB"
-  default     = false
-}
-
-variable "security_group_ids" {
-  type        = list(string)
-  default     = []
-  description = "A list of additional security group IDs to allow access to ALB"
-}
-
-variable "http_redirect" {
-  type        = bool
-  default     = false
-  description = "A boolean flag to enable/disable HTTP redirect to HTTPS"
-}
-
-variable "http_port" {
-  type        = number
-  default     = 80
-  description = "The port for the HTTP listener"
-}
-
-variable "https_port" {
-  type        = number
-  default     = 443
-  description = "The port for the HTTPS listener"
-}
-
-variable "https_ssl_policy" {
+variable "ec2_autoscaling_role_permissions_boundary" {
   type        = string
-  description = "The name of the SSL Policy for the listener"
-  default     = "ELBSecurityPolicy-2015-05"
+  description = "The Permissions Boundary ARN to apply to the EC2 Autoscaling Role."
+  default     = ""
+}
+
+variable "auto_termination_idle_timeout" {
+  type        = string
+  description = "Auto termination policy idle timeout in seconds (60 - 604800 supported)"
+  default     = null
+}
+
+// Custom ALB vars
+variable "alb_enabled" {
+  type        = bool
+  description = "If true, create an Elastic Load Balancer."
+  default     = false
+}
+
+variable "alb_allow_http_access" {
+  type        = bool
+  description = "If true, allow ALB traffic to port 80."
+  default     = false
+}
+
+variable "alb_allow_https_access" {
+  type        = bool
+  description = "If true, allow ALB traffic to port 443."
+  default     = false
+}
+
+variable "alb_internal" {
+  type        = bool
+  description = "If true, create an internal ALB."
+  default     = false
+}
+
+variable "alb_target_group_port" {
+  type        = string
+  description = "The port for the ALB to route traffic to."
+  default     = "80"
+}
+
+variable "alb_target_group_protocol" {
+  type        = string
+  description = "The protocol for the ALB to use."
+  default     = "HTTP"
+}
+
+variable "alb_target_group_target_type" {
+  type        = string
+  description = "The type of target for the ALB to route traffic to."
+  default     = "instance"
 }
 
 variable "certificate_arn" {
   type        = string
+  description = "The ARN of the ACM certificate for SSL encryption."
   default     = ""
-  description = "The ARN of the default SSL certificate for HTTPS listener"
-}
-
-variable "alb_allowed_cidr_blocks" {
-  type        = list(string)
-  default     = []
-  description = "List of CIDR blocks to be allowed to access the master instances"
-}
-
-variable "http_ingress_prefix_list_ids" {
-  type        = list(string)
-  default     = []
-  description = "List of prefix list IDs for allowing access to HTTP ingress security group"
-}
-
-variable "https_ingress_prefix_list_ids" {
-  type        = list(string)
-  default     = []
-  description = "List of prefix list IDs for allowing access to HTTPS ingress security group"
-}
-
-variable "subnet_ids" {
-  type        = list(string)
-  description = "A list of subnet IDs to associate with ALB"
-  default     = []
-}
-
-variable "cross_zone_load_balancing_enabled" {
-  type        = bool
-  default     = true
-  description = "A boolean flag to enable/disable cross zone load balancing"
-}
-
-variable "http2_enabled" {
-  type        = bool
-  default     = true
-  description = "A boolean flag to enable/disable HTTP/2"
-}
-
-variable "idle_timeout" {
-  type        = number
-  default     = 60
-  description = "The time in seconds that the connection is allowed to be idle"
-}
-
-variable "ip_address_type" {
-  type        = string
-  default     = "ipv4"
-  description = "The type of IP addresses used by the subnets for your load balancer. The possible values are `ipv4` and `dualstack`."
-}
-
-variable "deletion_protection_enabled" {
-  type        = bool
-  default     = false
-  description = "A boolean flag to enable/disable deletion protection for ALB"
-}
-
-variable "deregistration_delay" {
-  type        = number
-  default     = 15
-  description = "The amount of time to wait in seconds before changing the state of a deregistering target to unused"
-}
-
-variable "health_check_path" {
-  type        = string
-  default     = "/"
-  description = "The destination for the health check request"
-}
-
-variable "health_check_timeout" {
-  type        = number
-  default     = 10
-  description = "The amount of time to wait in seconds before failing a health check request"
-}
-
-variable "health_check_healthy_threshold" {
-  type        = number
-  default     = 2
-  description = "The number of consecutive health checks successes required before considering an unhealthy target healthy"
-}
-
-variable "health_check_unhealthy_threshold" {
-  type        = number
-  default     = 2
-  description = "The number of consecutive health check failures required before considering the target unhealthy"
-}
-
-variable "health_check_interval" {
-  type        = number
-  default     = 15
-  description = "The duration in seconds in between health checks"
-}
-
-variable "health_check_matcher" {
-  type        = string
-  default     = "200-399"
-  description = "The HTTP response codes to indicate a healthy check"
-}
-
-variable "alb_access_logs_s3_bucket_force_destroy" {
-  type        = bool
-  default     = false
-  description = "A boolean that indicates all objects should be deleted from the ALB access logs S3 bucket so that the bucket can be destroyed without error"
-}
-
-variable "load_balancer_type" {
-  type        = string
-  default     = "application"
-  description = "(Optional) The type of load balancer to create. Possible values are application or network. The default value is network."
-}
-
-variable "target_group_port" {
-  type        = number
-  default     = 80
-  description = "The port for the default target group"
-}
-
-variable "target_group_protocol" {
-  type        = string
-  default     = "HTTP"
-  description = "The protocol for the default target group HTTP or HTTPS"
-}
-
-variable "target_group_name" {
-  type        = string
-  default     = ""
-  description = "The name for the default target group, uses a module label name if left empty"
-}
-
-variable "target_group_target_type" {
-  type        = string
-  default     = "ip"
-  description = "The type (`instance`, `ip` or `lambda`) of targets that can be registered with the target group"
-}
-
-variable "target_group_additional_tags" {
-  type        = map(string)
-  default     = {}
-  description = "The additional tags to apply to the target group"
-}
-
-variable "lifecycle_rule_enabled" {
-  type        = bool
-  description = "A boolean that indicates whether the s3 log bucket lifecycle rule should be enabled."
-  default     = false
-}
-
-variable "enable_glacier_transition" {
-  type        = bool
-  description = "Enables the transition of lb logs to AWS Glacier"
-  default     = true
-}
-
-variable "glacier_transition_days" {
-  type        = number
-  description = "Number of days after which to move s3 logs to the glacier storage tier"
-  default     = 60
-}
-
-variable "expiration_days" {
-  type        = number
-  description = "Number of days after which to expunge s3 logs"
-  default     = 90
-}
-
-variable "noncurrent_version_expiration_days" {
-  type        = number
-  description = "Specifies when noncurrent s3 log versions expire"
-  default     = 90
-}
-
-variable "noncurrent_version_transition_days" {
-  type        = number
-  description = "Specifies when noncurrent s3 log versions transition"
-  default     = 30
-}
-
-variable "standard_transition_days" {
-  type        = number
-  description = "Number of days to persist logs in standard storage tier before moving to the infrequent access tier"
-  default     = 30
-}
-
-variable "stickiness" {
-  type = object({
-    cookie_duration = number
-    enabled         = bool
-  })
-  description = "Target group sticky configuration"
-  default     = null
 }

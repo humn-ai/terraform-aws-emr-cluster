@@ -238,9 +238,9 @@ module "label_service_managed" {
 }
 
 
-module "label_elb" {
+module "label_alb" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
   enabled    = var.enabled
   context    = module.label.context
-  attributes = compact(concat(module.label.attributes, list("elb")))
+  attributes = compact(concat(module.label.attributes, list("alb")))
 }

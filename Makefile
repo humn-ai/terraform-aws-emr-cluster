@@ -45,4 +45,4 @@ docs: docs/build
 
 docs/build:
 	@echo Generating terraform-docs Markdown tables
-	${CMD} terraform-docs markdown . --sort-by-required > ./docs/terraform.md
+	${CMD} terraform-docs markdown . > ./docs/terraform.md

@@ -3,16 +3,6 @@ output "cluster_id" {
   description = "EMR cluster ID"
 }
 
-output "master_instance_ids" {
-  value       = data.aws_instances.emr_master_instances.ids
-  description = "EMR master instance ids"
-}
-
-# output "core_instance_ids" {
-#   value       = data.aws_instances.emr_core_instances.ids
-#   description = "EMR core instance ids"
-# }
-
 output "cluster_name" {
   value       = join("", aws_emr_cluster.default.*.name)
   description = "EMR cluster name"
@@ -21,11 +11,6 @@ output "cluster_name" {
 output "master_public_dns" {
   value       = join("", aws_emr_cluster.default.*.master_public_dns)
   description = "Master public DNS"
-}
-
-output "kylin_public_dns" {
-  value       = var.enable_alb ? join("", aws_route53_record.default.*.fqdn) : "no DNS set"
-  description = "DNS of Kylin host"
 }
 
 output "master_security_group_id" {
@@ -39,16 +24,11 @@ output "slave_security_group_id" {
 }
 
 output "master_host" {
-  value       = module.dns_master.hostname
+  value       = join("", aws_route53_record.default.*.fqdn)
   description = "Name of the cluster CNAME record for the master nodes in the parent DNS zone"
 }
 
 output "ec2_role" {
-  value       = join("", aws_iam_role.ec2.*.name)
+  value       = var.ec2_role_enabled ? join("", aws_iam_role.ec2.*.name) : null
   description = "Role name of EMR EC2 instances so users can attach more policies"
-}
-
-output "context" {
-  value       = module.label.context
-  description = "Context of this module to pass to other label modules"
 }
