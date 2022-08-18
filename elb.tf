@@ -13,7 +13,7 @@ resource "aws_security_group_rule" "alb_egress" {
   to_port           = "0"
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.alb.*.id
+  security_group_id = aws_security_group.alb[0].id
 }
 
 resource "aws_security_group_rule" "alb_http_ingress" {
@@ -24,7 +24,7 @@ resource "aws_security_group_rule" "alb_http_ingress" {
   protocol          = "tcp"
   prefix_list_ids   = []
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.alb.*.id
+  security_group_id = aws_security_group.alb[0].id
 }
 
 resource "aws_security_group_rule" "alb_https_ingress" {
@@ -35,7 +35,7 @@ resource "aws_security_group_rule" "alb_https_ingress" {
   protocol          = "tcp"
   prefix_list_ids   = []
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.alb.*.id
+  security_group_id = aws_security_group.alb[0].id
 }
 
 resource "aws_lb" "default" {
@@ -45,7 +45,7 @@ resource "aws_lb" "default" {
   internal           = var.alb_internal
   load_balancer_type = "application"
 
-  security_groups = compact([aws_security_group.alb.*.id])
+  security_groups = compact([aws_security_group.alb[0].id])
 
   subnets                          = [var.subnet_id]
   enable_cross_zone_load_balancing = true
@@ -103,7 +103,7 @@ resource "aws_lb_target_group" "default" {
 
 resource "aws_lb_target_group_attachment" "default" {
   count            = var.alb_enabled && var.master_instance_group_instance_count > 0 ? var.master_instance_group_instance_count : 0
-  target_group_arn = aws_lb_target_group.default.*.arn
+  target_group_arn = aws_lb_target_group.default[0].arn
   target_id        = element(data.aws_instances.emr_master_instances.ids, count.index)
   port             = var.alb_target_group_port
 
