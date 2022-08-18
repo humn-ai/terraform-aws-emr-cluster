@@ -96,8 +96,7 @@ variable "vpc_id" {
 
 variable "master_dns_name" {
   type        = string
-  description = "Name of the cluster CNAME record to create in the parent DNS zone specified by `zone_id`. If left empty, the name will be auto-asigned using the format `emr-master-var.name`"
-  default     = null
+  description = "(Required) - Name of the ALB record to create in the parent DNS zone specified by `zone_id`."
 }
 
 variable "termination_protection" {
@@ -477,4 +476,46 @@ variable "auto_termination_idle_timeout" {
   type        = string
   description = "Auto termination policy idle timeout in seconds (60 - 604800 supported)"
   default     = null
+}
+
+variable "alb_enabled" {
+  type        = bool
+  description = "If true, create an Elastic Load Balancer."
+  default     = false
+}
+
+variable "alb_allow_http_access" {
+  type        = bool
+  description = "If true, allow ELB traffic to port 80."
+  default     = false
+}
+
+variable "alb_allow_https_access" {
+  type        = bool
+  description = "If true, allow ELB traffic to port 443."
+  default     = false
+}
+
+variable "alb_internal" {
+  type        = bool
+  description = "If true, create an internal ELB."
+  default     = false
+}
+
+variable "alb_target_group_port" {
+  type        = string
+  description = "The port for the ALB to route traffic to."
+  default     = "80"
+}
+
+variable "alb_target_group_protocol" {
+  type        = string
+  description = "The protocol for the ALB to use."
+  default     = "HTTP"
+}
+
+variable "alb_target_group_target_type" {
+  type        = string
+  description = "The type of target for the ALB to route traffic to."
+  default     = "instance"
 }
