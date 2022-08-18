@@ -478,6 +478,7 @@ variable "auto_termination_idle_timeout" {
   default     = null
 }
 
+// Custom ALB vars
 variable "alb_enabled" {
   type        = bool
   description = "If true, create an Elastic Load Balancer."
@@ -518,4 +519,10 @@ variable "alb_target_group_target_type" {
   type        = string
   description = "The type of target for the ALB to route traffic to."
   default     = "instance"
+}
+
+variable "certificate_arn" {
+  type        = string
+  description = "The ARN of the ACM certificate for SSL encryption."
+  default     = ""
 }

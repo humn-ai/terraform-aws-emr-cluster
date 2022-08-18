@@ -45,7 +45,7 @@ resource "aws_lb" "default" {
   internal           = var.alb_internal
   load_balancer_type = "application"
 
-  security_groups = compact(concat(var.security_group_ids, [aws_security_group.alb.*.id]))
+  security_groups = compact([aws_security_group.alb.*.id])
 
   subnets                          = var.subnet_ids
   enable_cross_zone_load_balancing = true
@@ -102,7 +102,7 @@ resource "aws_lb_target_group" "default" {
 }
 
 resource "aws_lb_target_group_attachment" "default" {
-  count            = var.alb_enabled && var.master_instance_group_instance_count < 0 ? var.master_instance_group_instance_count : 0
+  count            = var.alb_enabled && var.master_instance_group_instance_count > 0 ? var.master_instance_group_instance_count : 0
   target_group_arn = aws_lb_target_group.default.*.arn
   target_id        = element(data.aws_instances.emr_master_instances.ids, count.index)
   port             = var.alb_target_group_port
@@ -137,7 +137,7 @@ resource "aws_lb_listener" "https" {
 
   port            = 443
   protocol        = "HTTPS"
-  ssl_policy      = var.https_ssl_policy
+  ssl_policy      = "ELBSecurityPolicy-2015-05"
   certificate_arn = var.certificate_arn
 
   default_action {
