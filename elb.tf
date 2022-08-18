@@ -47,7 +47,7 @@ resource "aws_lb" "default" {
 
   security_groups = compact([aws_security_group.alb[0].id])
 
-  subnets                          = [var.subnet_id]
+  subnets                          = var.subnet_ids
   enable_cross_zone_load_balancing = true
   enable_http2                     = true
   idle_timeout                     = 60

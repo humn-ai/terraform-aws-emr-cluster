@@ -351,7 +351,7 @@ resource "aws_emr_cluster" "default" {
   # https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-sg-specify.html
   ec2_attributes {
     key_name                          = var.key_name
-    subnet_id                         = var.subnet_id
+    subnet_id                         = var.subnet_ids[0]
     emr_managed_master_security_group = var.use_existing_managed_master_security_group == false ? join("", aws_security_group.managed_master.*.id) : var.managed_master_security_group
     emr_managed_slave_security_group  = var.use_existing_managed_slave_security_group == false ? join("", aws_security_group.managed_slave.*.id) : var.managed_slave_security_group
     service_access_security_group     = var.use_existing_service_access_security_group == false && var.subnet_type == "private" ? join("", aws_security_group.managed_service_access.*.id) : var.service_access_security_group
