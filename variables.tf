@@ -201,7 +201,7 @@ variable "region" {
 }
 
 variable "subnet_ids" {
-  type        = string
+  type        = list(string)
   description = "VPC subnet IDs where you want the job flow to launch. Cannot specify the `cc1.4xlarge` instance type for nodes of a job flow launched in a Amazon VPC"
 }
 
