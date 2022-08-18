@@ -19,12 +19,11 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_dns_master"></a> [dns\_master](#module\_dns\_master) | cloudposse/route53-cluster-hostname/aws | 0.12.2 |
 | <a name="module_label"></a> [label](#module\_label) | git::https://github.com/cloudposse/terraform-null-label.git | tags/0.25.0 |
+| <a name="module_label_alb"></a> [label\_alb](#module\_label\_alb) | git::https://github.com/cloudposse/terraform-null-label.git | tags/0.19.2 |
 | <a name="module_label_core"></a> [label\_core](#module\_label\_core) | cloudposse/label/null | 0.25.0 |
 | <a name="module_label_ec2"></a> [label\_ec2](#module\_label\_ec2) | cloudposse/label/null | 0.25.0 |
 | <a name="module_label_ec2_autoscaling"></a> [label\_ec2\_autoscaling](#module\_label\_ec2\_autoscaling) | cloudposse/label/null | 0.25.0 |
-| <a name="module_label_elb"></a> [label\_elb](#module\_label\_elb) | git::https://github.com/cloudposse/terraform-null-label.git | tags/0.19.2 |
 | <a name="module_label_emr"></a> [label\_emr](#module\_label\_emr) | cloudposse/label/null | 0.25.0 |
 | <a name="module_label_master"></a> [label\_master](#module\_label\_master) | cloudposse/label/null | 0.25.0 |
 | <a name="module_label_master_managed"></a> [label\_master\_managed](#module\_label\_master\_managed) | cloudposse/label/null | 0.25.0 |
@@ -48,7 +47,6 @@
 | [aws_iam_role_policy_attachment.ec2_autoscaling](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.emr](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_lb.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb) | resource |
-| [aws_lb_listener.http_forward](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
 | [aws_lb_listener.http_redirect](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
 | [aws_lb_listener.https](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
 | [aws_lb_target_group.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group) | resource |
@@ -87,6 +85,13 @@
 | <a name="input_additional_master_security_group"></a> [additional\_master\_security\_group](#input\_additional\_master\_security\_group) | The id of the existing additional security group that will be used for EMR master node. If empty, a new security group will be created | `string` | `""` | no |
 | <a name="input_additional_slave_security_group"></a> [additional\_slave\_security\_group](#input\_additional\_slave\_security\_group) | The id of the existing additional security group that will be used for EMR core & task nodes. If empty, a new security group will be created | `string` | `""` | no |
 | <a name="input_additional_tag_map"></a> [additional\_tag\_map](#input\_additional\_tag\_map) | Additional tags for appending to tags\_as\_list\_of\_maps. Not added to `tags`. | `map(string)` | `{}` | no |
+| <a name="input_alb_allow_http_access"></a> [alb\_allow\_http\_access](#input\_alb\_allow\_http\_access) | If true, allow ELB traffic to port 80. | `bool` | `false` | no |
+| <a name="input_alb_allow_https_access"></a> [alb\_allow\_https\_access](#input\_alb\_allow\_https\_access) | If true, allow ELB traffic to port 443. | `bool` | `false` | no |
+| <a name="input_alb_enabled"></a> [alb\_enabled](#input\_alb\_enabled) | If true, create an Elastic Load Balancer. | `bool` | `false` | no |
+| <a name="input_alb_internal"></a> [alb\_internal](#input\_alb\_internal) | If true, create an internal ELB. | `bool` | `false` | no |
+| <a name="input_alb_target_group_port"></a> [alb\_target\_group\_port](#input\_alb\_target\_group\_port) | The port for the ALB to route traffic to. | `string` | `"80"` | no |
+| <a name="input_alb_target_group_protocol"></a> [alb\_target\_group\_protocol](#input\_alb\_target\_group\_protocol) | The protocol for the ALB to use. | `string` | `"HTTP"` | no |
+| <a name="input_alb_target_group_target_type"></a> [alb\_target\_group\_target\_type](#input\_alb\_target\_group\_target\_type) | The type of target for the ALB to route traffic to. | `string` | `"instance"` | no |
 | <a name="input_applications"></a> [applications](#input\_applications) | A list of applications for the cluster. Valid values are: Flink, Ganglia, Hadoop, HBase, HCatalog, Hive, Hue, JupyterHub, Livy, Mahout, MXNet, Oozie, Phoenix, Pig, Presto, Spark, Sqoop, TensorFlow, Tez, Zeppelin, and ZooKeeper (as of EMR 5.25.0). Case insensitive | `list(string)` | n/a | yes |
 | <a name="input_attributes"></a> [attributes](#input\_attributes) | Additional attributes (e.g. `1`) | `list(string)` | `[]` | no |
 | <a name="input_auto_termination_idle_timeout"></a> [auto\_termination\_idle\_timeout](#input\_auto\_termination\_idle\_timeout) | Auto termination policy idle timeout in seconds (60 - 604800 supported) | `string` | `null` | no |
@@ -135,7 +140,7 @@
 | <a name="input_managed_slave_security_group"></a> [managed\_slave\_security\_group](#input\_managed\_slave\_security\_group) | The id of the existing managed security group that will be used for EMR core & task nodes. If empty, a new security group will be created | `string` | `""` | no |
 | <a name="input_master_allowed_cidr_blocks"></a> [master\_allowed\_cidr\_blocks](#input\_master\_allowed\_cidr\_blocks) | List of CIDR blocks to be allowed to access the master instances | `list(string)` | `[]` | no |
 | <a name="input_master_allowed_security_groups"></a> [master\_allowed\_security\_groups](#input\_master\_allowed\_security\_groups) | List of security group ids to be allowed to connect to the master instances | `list(string)` | `[]` | no |
-| <a name="input_master_dns_name"></a> [master\_dns\_name](#input\_master\_dns\_name) | Name of the cluster CNAME record to create in the parent DNS zone specified by `zone_id`. If left empty, the name will be auto-asigned using the format `emr-master-var.name` | `string` | `null` | no |
+| <a name="input_master_dns_name"></a> [master\_dns\_name](#input\_master\_dns\_name) | (Required) - Name of the ALB record to create in the parent DNS zone specified by `zone_id`. | `string` | n/a | yes |
 | <a name="input_master_instance_group_bid_price"></a> [master\_instance\_group\_bid\_price](#input\_master\_instance\_group\_bid\_price) | Bid price for each EC2 instance in the Master instance group, expressed in USD. By setting this attribute, the instance group is being declared as a Spot Instance, and will implicitly create a Spot request. Leave this blank to use On-Demand Instances | `string` | `null` | no |
 | <a name="input_master_instance_group_ebs_iops"></a> [master\_instance\_group\_ebs\_iops](#input\_master\_instance\_group\_ebs\_iops) | The number of I/O operations per second (IOPS) that the Master volume supports | `number` | `null` | no |
 | <a name="input_master_instance_group_ebs_size"></a> [master\_instance\_group\_ebs\_size](#input\_master\_instance\_group\_ebs\_size) | Master instances volume size, in gibibytes (GiB) | `number` | n/a | yes |
