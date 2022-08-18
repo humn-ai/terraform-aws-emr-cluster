@@ -85,10 +85,10 @@
 | <a name="input_additional_master_security_group"></a> [additional\_master\_security\_group](#input\_additional\_master\_security\_group) | The id of the existing additional security group that will be used for EMR master node. If empty, a new security group will be created | `string` | `""` | no |
 | <a name="input_additional_slave_security_group"></a> [additional\_slave\_security\_group](#input\_additional\_slave\_security\_group) | The id of the existing additional security group that will be used for EMR core & task nodes. If empty, a new security group will be created | `string` | `""` | no |
 | <a name="input_additional_tag_map"></a> [additional\_tag\_map](#input\_additional\_tag\_map) | Additional tags for appending to tags\_as\_list\_of\_maps. Not added to `tags`. | `map(string)` | `{}` | no |
-| <a name="input_alb_allow_http_access"></a> [alb\_allow\_http\_access](#input\_alb\_allow\_http\_access) | If true, allow ELB traffic to port 80. | `bool` | `false` | no |
-| <a name="input_alb_allow_https_access"></a> [alb\_allow\_https\_access](#input\_alb\_allow\_https\_access) | If true, allow ELB traffic to port 443. | `bool` | `false` | no |
+| <a name="input_alb_allow_http_access"></a> [alb\_allow\_http\_access](#input\_alb\_allow\_http\_access) | If true, allow ALB traffic to port 80. | `bool` | `false` | no |
+| <a name="input_alb_allow_https_access"></a> [alb\_allow\_https\_access](#input\_alb\_allow\_https\_access) | If true, allow ALB traffic to port 443. | `bool` | `false` | no |
 | <a name="input_alb_enabled"></a> [alb\_enabled](#input\_alb\_enabled) | If true, create an Elastic Load Balancer. | `bool` | `false` | no |
-| <a name="input_alb_internal"></a> [alb\_internal](#input\_alb\_internal) | If true, create an internal ELB. | `bool` | `false` | no |
+| <a name="input_alb_internal"></a> [alb\_internal](#input\_alb\_internal) | If true, create an internal ALB. | `bool` | `false` | no |
 | <a name="input_alb_target_group_port"></a> [alb\_target\_group\_port](#input\_alb\_target\_group\_port) | The port for the ALB to route traffic to. | `string` | `"80"` | no |
 | <a name="input_alb_target_group_protocol"></a> [alb\_target\_group\_protocol](#input\_alb\_target\_group\_protocol) | The protocol for the ALB to use. | `string` | `"HTTP"` | no |
 | <a name="input_alb_target_group_target_type"></a> [alb\_target\_group\_target\_type](#input\_alb\_target\_group\_target\_type) | The type of target for the ALB to route traffic to. | `string` | `"instance"` | no |

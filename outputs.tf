@@ -24,7 +24,7 @@ output "slave_security_group_id" {
 }
 
 output "master_host" {
-  value       = module.dns_master.hostname
+  value       = join("", aws_route53_record.default.*.fqdn)
   description = "Name of the cluster CNAME record for the master nodes in the parent DNS zone"
 }
 

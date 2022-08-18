@@ -486,19 +486,19 @@ variable "alb_enabled" {
 
 variable "alb_allow_http_access" {
   type        = bool
-  description = "If true, allow ELB traffic to port 80."
+  description = "If true, allow ALB traffic to port 80."
   default     = false
 }
 
 variable "alb_allow_https_access" {
   type        = bool
-  description = "If true, allow ELB traffic to port 443."
+  description = "If true, allow ALB traffic to port 443."
   default     = false
 }
 
 variable "alb_internal" {
   type        = bool
-  description = "If true, create an internal ELB."
+  description = "If true, create an internal ALB."
   default     = false
 }
 
