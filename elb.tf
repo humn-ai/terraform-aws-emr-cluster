@@ -62,8 +62,8 @@ resource "aws_route53_record" "default" {
   type    = "A"
 
   alias {
-    name                   = aws_lb.default.*.dns_name
-    zone_id                = aws_lb.default.*.zone_id
+    name                   = aws_lb.default[0].dns_name
+    zone_id                = aws_lb.default[0].zone_id
     evaluate_target_health = true
   }
 }
@@ -115,12 +115,12 @@ resource "aws_lb_target_group_attachment" "default" {
 
 resource "aws_lb_listener" "http_redirect" {
   count             = var.alb_enabled && var.alb_allow_http_access ? 1 : 0
-  load_balancer_arn = aws_lb.default.*.arn
+  load_balancer_arn = aws_lb.default[0].arn
   port              = 80
   protocol          = "HTTP"
 
   default_action {
-    target_group_arn = aws_lb_target_group.default.*.arn
+    target_group_arn = aws_lb_target_group.default[0].arn
     type             = "redirect"
 
     redirect {
@@ -133,7 +133,7 @@ resource "aws_lb_listener" "http_redirect" {
 
 resource "aws_lb_listener" "https" {
   count             = var.alb_enabled && var.alb_allow_https_access ? 1 : 0
-  load_balancer_arn = aws_lb.default.*.arn
+  load_balancer_arn = aws_lb.default[0].arn
 
   port            = 443
   protocol        = "HTTPS"
@@ -141,7 +141,7 @@ resource "aws_lb_listener" "https" {
   certificate_arn = var.certificate_arn
 
   default_action {
-    target_group_arn = aws_lb_target_group.default.*.arn
+    target_group_arn = aws_lb_target_group.default[0].arn
     type             = "forward"
   }
 }
