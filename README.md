@@ -43,7 +43,7 @@
 
 [![README Header][logo]][website]
 
-# terraform-aws-emr-cluster [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-aws-emr-cluster.svg)](https://github.com/cloudposse/terraform-aws-emr-cluster/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
+# tf-mod-aws-emr-cluster
 
 ## Module description
 
@@ -52,11 +52,7 @@ Terraform module to provision an Elastic MapReduce (EMR) cluster on AWS.
 ## Usage
 
 **IMPORTANT:** The `master` branch is used in `source` just as an example. In your code, do not pin to `master` because there may be breaking changes between releases.
-Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest releases](https://github.com/cloudposse/terraform-aws-emr-cluster/releases).
-
-For a complete example, see [examples/complete](examples/complete)
-
-For automated tests of the complete example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest) (which tests and deploys the example on AWS), see [test](test).
+Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest releases](https://github.com/humn-ai/tf-mod-aws-emr-cluster/releases).
 
 ```hcl
 provider "aws" {
@@ -365,26 +361,16 @@ Available targets:
 | <a name="output_master_security_group_id"></a> [master_security_group_id](#output_master_security_group_id) | Master security group ID                                                     |
 | <a name="output_slave_security_group_id"></a> [slave_security_group_id](#output_slave_security_group_id)    | Slave security group ID                                                      |
 
-## Related Projects
-
-You can find more [Terraform Modules](terraform_modules) by vising the link.
-
-Additionally, check out these other related, and maintained projects.
-
-- [terraform-aws-rds-cluster](https://github.com/cloudposse/terraform-aws-rds-cluster) - Terraform module to provision an RDS Aurora cluster for MySQL or Postgres
-- [terraform-aws-rds](https://github.com/cloudposse/terraform-aws-rds) - Terraform module to provision AWS RDS instances
-- [terraform-aws-rds-cloudwatch-sns-alarms](https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms) - Terraform module that configures important RDS alerts using CloudWatch and sends them to an SNS topic
-
 ## Help
 
 **Got a question?** We got answers.
 
-File a Github [issue](cloudposse/terraform-aws-emr-cluster/issues), or message us on [Slack][slack]
+File a Github [issue](humn-ai/tf-mod-aws-emr-cluster/issues), or message us on [Slack][slack]
 
 ### Contributors
 
-| [![Erik Osterman][osterman_avatar]][osterman_homepage]<br/>[Erik Osterman][osterman_homepage] | [![Andriy Knysh][aknysh_avatar]][aknysh_homepage]<br/>[Andriy Knysh][aknysh_homepage] | [![Igor Rodionov][goruha_avatar]][goruha_homepage]<br/>[Igor Rodionov][goruha_homepage] |
-| --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| [![Erik Osterman][osterman_avatar]][osterman_homepage]<br/>[Erik Osterman][osterman_homepage] | [![Andriy Knysh][aknysh_avatar]][aknysh_homepage]<br/>[Andriy Knysh][aknysh_homepage] | [![Igor Rodionov][goruha_avatar]][goruha_homepage]<br/>[Igor Rodionov][goruha_homepage] | [![Callum Robertson][callumccr_avatar]][callumccr_homepage]<br/>[Callum Robertson][callumccr_homepage] | [![Lawrence Warren][lawrencewarren_avatar]][lawrencewarren_homepage]<br/>[Lawrence Warren][lawrencewarren_homepage] |
+| --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
 
 [osterman_homepage]: https://github.com/osterman
 [osterman_avatar]: https://wariva-github-assets.s3.eu-west-2.amazonaws.com/logo.png
@@ -392,6 +378,10 @@ File a Github [issue](cloudposse/terraform-aws-emr-cluster/issues), or message u
 [aknysh_avatar]: https://wariva-github-assets.s3.eu-west-2.amazonaws.com/logo.png
 [goruha_homepage]: https://github.com/goruha
 [goruha_avatar]: https://wariva-github-assets.s3.eu-west-2.amazonaws.com/logo.png
+[callumccr_homepage]: https://github.com/callumccr
+[callumccr_avatar]: https://wariva-github-assets.s3.eu-west-2.amazonaws.com/logo.png
+[lawrencewarren_homepage]: https://github.com/LawrenceWarren
+[lawrencewarren_avatar]: https://wariva-github-assets.s3.eu-west-2.amazonaws.com/logo.png
 
 ---
 
