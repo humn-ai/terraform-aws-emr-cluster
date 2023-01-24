@@ -1,6 +1,6 @@
 resource "aws_security_group" "alb" {
   count       = var.alb_enabled ? 1 : 0
-  description = "Controls access to the Kylin ALB (HTTP/HTTPS)"
+  description = "Controls access to the ${use_wrong_loadbalancer_name ? "" : "Kylin"} ALB (HTTP/HTTPS)"
   vpc_id      = var.vpc_id
   name        = module.label_alb.id
   tags        = module.label_alb.tags
