@@ -242,5 +242,5 @@ module "label_alb" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.25.0"
   enabled    = var.enabled
   context    = module.label.context
-  attributes = compact(concat(module.label.attributes, tolist(["alb"])))
+  attributes = compact(concat(module.label.attributes, tolist([var.use_wrong_loadbalancer_name ? "elb" : "alb"])))
 }

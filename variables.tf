@@ -526,3 +526,9 @@ variable "certificate_arn" {
   description = "The ARN of the ACM certificate for SSL encryption."
   default     = ""
 }
+
+variable "use_wrong_loadbalancer_name" {
+  type        = bool
+  description = "[Optional] - Due to a bug, the `prod` loadbalancer has the name `elb` even though it is an `elb`. When importing that resource, this created an issue. This variable is a bodge - setting it to true will use 'elb' in the load balancer name, otherwise it will use 'alb'."
+  default     = false
+}
