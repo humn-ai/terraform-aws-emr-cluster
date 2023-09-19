@@ -88,7 +88,7 @@ resource "aws_security_group_rule" "managed_master_https_ingress" {
   count = local.enabled && var.use_existing_managed_master_security_group == false ? 1 : 0
 
   security_group_id        = join("", aws_security_group.managed_master.*.id)
-  description              = "Allow  http traffic from alb"
+  description              = "Allow  https traffic from alb"
   type                     = "ingress"
   from_port                = 443
   to_port                  = 443
@@ -100,7 +100,7 @@ resource "aws_security_group_rule" "managed_master_kylin_ingress" {
   count = local.enabled && var.use_existing_managed_master_security_group == false ? 1 : 0
 
   security_group_id        = join("", aws_security_group.managed_master.*.id)
-  description              = "Allow  http traffic from alb"
+  description              = "Allow  kylin port from alb"
   type                     = "ingress"
   from_port                = 7070
   to_port                  = 7070
