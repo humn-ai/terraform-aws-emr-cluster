@@ -72,6 +72,42 @@ resource "aws_security_group_rule" "managed_master_egress" {
   security_group_id = join("", aws_security_group.managed_master.*.id)
 }
 
+resource "aws_security_group_rule" "managed_master_http_ingress" {
+  count = local.enabled && var.use_existing_managed_master_security_group == false ? 1 : 0
+
+  security_group_id        = join("", aws_security_group.managed_master.*.id)
+  description              = "Allow  http traffic from alb"
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = join("", aws_security_group.alb.*.id)
+}
+
+resource "aws_security_group_rule" "managed_master_https_ingress" {
+  count = local.enabled && var.use_existing_managed_master_security_group == false ? 1 : 0
+
+  security_group_id        = join("", aws_security_group.managed_master.*.id)
+  description              = "Allow  http traffic from alb"
+  type                     = "ingress"
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = "tcp"
+  source_security_group_id = join("", aws_security_group.alb.*.id)
+}
+
+resource "aws_security_group_rule" "managed_master_kylin_ingress" {
+  count = local.enabled && var.use_existing_managed_master_security_group == false ? 1 : 0
+
+  security_group_id        = join("", aws_security_group.managed_master.*.id)
+  description              = "Allow  http traffic from alb"
+  type                     = "ingress"
+  from_port                = 7070
+  to_port                  = 7070
+  protocol                 = "tcp"
+  source_security_group_id = join("", aws_security_group.alb.*.id)
+}
+
 resource "aws_security_group" "managed_slave" {
   count = local.enabled && var.use_existing_managed_slave_security_group == false ? 1 : 0
 
