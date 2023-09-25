@@ -73,7 +73,7 @@ resource "aws_security_group_rule" "managed_master_egress" {
 }
 
 resource "aws_security_group_rule" "managed_master_http_ingress" {
-  count = local.enabled && var.use_existing_managed_master_security_group == false ? 1 : 0
+  count = local.enabled && !var.use_existing_managed_master_security_group && var.alb_enabled ? 1 : 0
 
   security_group_id        = join("", aws_security_group.managed_master.*.id)
   description              = "Allow  http traffic from alb"
@@ -85,7 +85,7 @@ resource "aws_security_group_rule" "managed_master_http_ingress" {
 }
 
 resource "aws_security_group_rule" "managed_master_https_ingress" {
-  count = local.enabled && var.use_existing_managed_master_security_group == false ? 1 : 0
+  count = local.enabled && !var.use_existing_managed_master_security_group && var.alb_enabled ? 1 : 0
 
   security_group_id        = join("", aws_security_group.managed_master.*.id)
   description              = "Allow  https traffic from alb"
@@ -97,7 +97,7 @@ resource "aws_security_group_rule" "managed_master_https_ingress" {
 }
 
 resource "aws_security_group_rule" "managed_master_kylin_ingress" {
-  count = local.enabled && var.use_existing_managed_master_security_group == false ? 1 : 0
+  count = local.enabled && !var.use_existing_managed_master_security_group && var.alb_enabled ? 1 : 0
 
   security_group_id        = join("", aws_security_group.managed_master.*.id)
   description              = "Allow  kylin port from alb"
